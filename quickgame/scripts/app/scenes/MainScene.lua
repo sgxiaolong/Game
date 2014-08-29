@@ -1,77 +1,23 @@
-
-local Player = import("..roles.Role")
+local Player = import("..roles.role")
+local TouchLayer = import(".TouchLayer")
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
 end)
 
+function MainScene:ctor()
+    self:initScene()
+end
+
 function MainScene:initScene()
 	self:addRoles()
-    self:addTouchLayer()
-end
-
-function MainScene:addTouchLayer()
-    local function onTouch(eventName, x, y)
-    	if(true ~=self.layerTouch:getBoundingBox():containsPoint(ccp(x, y))) then
-    		return false
-    	end
-        if (eventName == "began" or eventName == "moved") then
-            if x<80 then
-                self.Direct = "left"
-            else
-            	self.Direct = "right"
-            end
-        elseif eventName == "end" then
-        		self.Direct = "standy"
-        end
-        print(self.Direct,eventName, x, y)
-        return true
-    end
-
-    
-    --self.layerTouch = display.newSprite("image/privilege_icon_21.png")
-    self.layerTouch = display.newColorLayer(ccc4(255, 255, 255, 128))
-    self.layerTouch:setAnchorPoint(ccp(0, 0))
-    self.layerTouch:setContentSize(CCSizeMake(500,100))
-    self.layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, 
-    	function(event)
-    	print_lua_table(event)
-        return onTouch(event.name, event.x, event.y)
-    end)
-    self.layerTouch:setTouchEnabled(true)
-    self.layerTouch:setPosition(ccp(0,0))
-    self:addChild(self.layerTouch, -5)
-end
-
-function print_lua_table (lua_table, indent)
-	indent = indent or 0
-	for k, v in pairs(lua_table) do
-		if type(k) == "string" then
-			k = string.format("%q", k)
-		end
-		local szSuffix = ""
-		if type(v) == "table" then
-			szSuffix = "{"
-		end
-		local szPrefix = string.rep("    ", indent)
-		formatting = szPrefix.."["..k.."]".." = "..szSuffix
-		if type(v) == "table" then
-			print(formatting)
-			print_lua_table(v, indent + 1)
-			print(szPrefix.."},")
-		else
-			local szValue = ""
-			if type(v) == "string" then
-				szValue = string.format("%q", v)
-			else
-				szValue = tostring(v)
-			end
-			print(formatting..szValue..",")
-		end
-	end
+    self.touchLayer = TouchLayer:new()
+    self:addChild(self.touchLayer)
+    -- self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
+    -- self:scheduleUpdate()
 end
 
 function MainScene:tick(dt)
-    print(self.Direct)
+    --print(self.Direct)
 end
 
 function MainScene:addRoles()
