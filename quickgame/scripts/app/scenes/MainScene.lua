@@ -1,3 +1,4 @@
+
 local Player = import("..roles.Role")
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
