@@ -4,16 +4,6 @@ local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
 end)
 
-function MainScene:ctor()
-    ui.newTTFLabel({text = "Hello, World", size = 64, align = ui.TEXT_ALIGN_CENTER})
-        :pos(display.cx, display.cy)
-        :addTo(self)
-    self:initScene()
-    self.layerTouch:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    self.layerTouch:scheduleUpdate()
-    self.Direct = "standy"
-end
-
 function MainScene:initScene()
 	self:addRoles()
     self:addTouchLayer()
