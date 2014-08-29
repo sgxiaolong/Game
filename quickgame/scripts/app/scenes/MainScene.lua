@@ -1,6 +1,5 @@
+
 local Player = import("..roles.Role")
-local Player = import("..roles.role")
-local TouchLayer = import(".TouchLayer")
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
 end)
